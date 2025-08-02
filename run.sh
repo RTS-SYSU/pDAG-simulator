@@ -43,7 +43,8 @@ case "$1" in
 
     CMD="$*"
     echo "⚙️ Sending command to container: $CMD"
-    docker exec -i $CONTAINER_NAME sh -c "echo '$CMD' | /bin/bash -c 'cat > /dev/stdin' | java -cp 'lib/*:bin' Main"
+    # docker exec -i $CONTAINER_NAME sh -c "echo '$CMD' | /bin/bash -c 'cat > /dev/stdin' | java -cp 'lib/*:bin' Main"
+    docker exec $CONTAINER_NAME java -cp "lib/*:bin" Main $*
     ;;
 
   draw)

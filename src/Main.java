@@ -5,96 +5,67 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Java container started. Awaiting commands...");
-
-        while (true) {
-            System.out.print(">> ");
-            String line = scanner.nextLine().trim();
-            if (line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("quit")) {
-                System.out.println("Shutting down...");
-                break;
-            }
-            String[] parts = line.split("\\s+");
-            try {
-                switch (parts[0].toLowerCase()) {
-                    case "deviation":{
-                        if (parts.length == 1){
-                            DeviationAnalysis.run();
-                        }
-                        if (parts.length == 2){
-                            switch (parts[1].toLowerCase()){
-                                case "psr":
-                                    DeviationAnalysis.runPsr(0.2, 0.8);
-                                    break;
-                                case "para":
-                                    DeviationAnalysis.runPara(3, 9);
-                                    break;
-                                case "cond":
-                                    DeviationAnalysis.runCond(2, 7);
-                                default:
-                                    System.out.println("Usage: deviation [psr | para | cond] [start end]");
-                                    break;
-                            }
-                        }
-                        else if (parts.length == 4){
-                            switch (parts[1].toLowerCase()){
-                                case "psr":{
-                                    double startPsr = Double.parseDouble(parts[2]);
-                                    double endPsr = Double.parseDouble(parts[3]);
-                                    DeviationAnalysis.runPsr(startPsr,endPsr);
-                                    break;
-                                }
-
-                                case "para":{
-                                    int startPara = Integer.parseInt(parts[2]);
-                                    int endPara = Integer.parseInt(parts[3]);
-                                    DeviationAnalysis.runPara(startPara, endPara);
-                                    break;
-                                }
-
-                                case "cond":{
-                                    int startCond = Integer.parseInt(parts[2]);
-                                    int endCond = Integer.parseInt(parts[3]);
-                                    DeviationAnalysis.runCond(startCond, endCond);
-                                    break;
-                                }
-
-                                default:
-                                    System.out.println("Usage: deviation [psr | para | cond] [start end]");
-                                    break;
-                            }
-                        }
-                        else{
-                            System.out.println("Usage: deviation [psr | para | cond] [start end]");
-                        }
-                        break;
-                    }
-                    case "cost":{
-                        if (parts.length == 1){
-                            ComputationCostAnalysis.run();
-                        }
-                        else if(parts.length == 3){
-                            int startCond = Integer.parseInt(parts[1]);
-                            int endCond = Integer.parseInt(parts[2]);
-                            ComputationCostAnalysis.run(startCond, endCond);
-                        }else{
-                            System.out.println("Usage: cost [start end]");
-                        }
-                        break;
-                    }
-
-                    case "design":
-                        DesignSolutionAnalysis.run();
-                        break;
-                    default:
-                        System.out.println("Unknown command: " + parts[0]);
-                }
-            } catch (Exception e) {
-                System.out.println("Error executing command: " + e.getMessage());
-            }
+        if (args.length == 0) {
+            System.out.println("Usage: java Main [deviation|cost|design] ...");
+            return;
         }
 
-        scanner.close();
+        String cmd = args[0].toLowerCase();
+        try {
+            switch (cmd) {
+                case "deviation":
+                    if (args.length == 1) {
+                        DeviationAnalysis.run();
+                    } else if (args.length == 2) {
+                        switch (args[1].toLowerCase()) {
+                            case "psr":
+                                DeviationAnalysis.runPsr(0.2, 0.8);
+                                break;
+                            case "para":
+                                DeviationAnalysis.runPara(3, 9);
+                                break;
+                            case "cond":
+                                DeviationAnalysis.runCond(2, 10);
+                                break;
+                            default:
+                                System.out.println("Usage: deviation [psr|para|cond] [start end]");
+                        }
+                    } else if (args.length == 4) {
+                        switch (args[1].toLowerCase()) {
+                            case "psr":
+                                DeviationAnalysis.runPsr(Double.parseDouble(args[2]), Double.parseDouble(args[3]));
+                                break;
+                            case "para":
+                                DeviationAnalysis.runPara(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                                break;
+                            case "cond":
+                                DeviationAnalysis.runCond(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                                break;
+                        }
+                    } else {
+                        System.out.println("Usage: deviation [psr|para|cond] [start end]");
+                    }
+                    break;
+
+                case "cost":
+                    if (args.length == 1) {
+                        ComputationCostAnalysis.run();
+                    } else if (args.length == 3) {
+                        ComputationCostAnalysis.run(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+                    } else {
+                        System.out.println("Usage: cost [start end]");
+                    }
+                    break;
+
+                case "design":
+                    DesignSolutionAnalysis.run();
+                    break;
+
+                default:
+                    System.out.println("Unknown command: " + cmd);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

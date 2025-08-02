@@ -25,4 +25,5 @@ RUN find ./src -name "*.java" > sources.txt && \
 #    python3 scripts/design_solution_analysis_plot.py && \
 #    ls -l /pDAG-simulator/result
 
-CMD ["java", "-cp", "lib/*:bin", "Main"]
+#CMD ["java", "-cp", "lib/*:bin", "Main"]
+CMD [ "tail", "-f", "/dev/null" ]
