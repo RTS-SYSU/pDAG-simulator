@@ -1,4 +1,27 @@
-# DAG Execution Timing Simulator
+# p-DAG Execution Timing Simulator
+
+<p align="center">
+    <a href="https://www.rtss.org">
+        <img src="https://img.shields.io/badge/RTSS-2025-blueviolet?logo=IEEE" alt="RTSS 2025">
+    </a>
+    <a href="https://github.com/RTS-SYSU" rel="nofollow">
+        <img src="https://img.shields.io/badge/RTS-SYSU-brightgreen.svg">
+    </a>
+    <a href="#">
+    <img src="https://img.shields.io/badge/Language-Java_&_Python-yellow" alt="Language">
+  </a>
+    <a href="#">
+    <img src="https://img.shields.io/badge/Platform-Docker_Ready-blue" alt="Platform">
+  </a>
+    <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+  </a>
+</p>
+
+
+
+This repository provides the implementation and experimental code accompanying the paper:
+"Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems."
 
 
 
@@ -167,7 +190,7 @@ Due to the scale and number of conditional structures tested, the full experimen
 
 Project Maintainers:
 
-- **Shuai Zhao** — alice@example.com  
+- **Shuai Zhao** — [zhaosh56@mail.sysu.edu.cn]()
 - **Yiyang Gao** — [gaoyy26@mail2.sysu.edu.cn]()
 - **Zhiyang Lin** — [linzhy78@mail2.sysu.edu.cn]()
 
