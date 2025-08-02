@@ -22,7 +22,7 @@ rows = {method: ['-'] * len(file_range) for method in methods}
 for idx, x in enumerate(file_range):
     filename = f"result/design_solution_analysis/CoresCMP_cond_{x}.txt"
     if not os.path.exists(filename):
-        print(f"File not found: {filename}")
+        # print(f"File not found: {filename}")
         continue
 
     with open(filename, "r") as f:

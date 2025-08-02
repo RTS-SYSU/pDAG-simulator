@@ -11,6 +11,7 @@ def plot_ratio():
     for num in nums:
         filename = f'result/deviation_analysis/avg_ratio_{num}.txt'
         if not os.path.exists(filename):
+            data_to_plot.append([])
             continue
         
         with open(filename, 'r') as f:
@@ -27,6 +28,7 @@ def plot_ratio():
         
         if not numbers:
             print(f"There are invalid data in {filename}. Skip!")
+            data_to_plot.append([])
             continue
         transformed = [x for x in numbers if x <= 1.0 and x > 0.0]
         filtered = [100*(1.0 - x) for x in transformed]
@@ -54,6 +56,7 @@ def plot_para():
     for num in nums:
         filename = f'result/deviation_analysis/avg_para_{num}.txt'
         if not os.path.exists(filename):
+            data_to_plot.append([])
             continue
         
         with open(filename, 'r') as f:
@@ -69,6 +72,7 @@ def plot_para():
         
         if not numbers:
             print(f"There are invalid data in {filename}. Skip!")
+            data_to_plot.append([])
             continue
         transformed = [x for x in numbers if x <= 1.0 and x > 0.0]
         filtered = [100*(1.0 - x) for x in transformed]
@@ -96,6 +100,7 @@ def plot_cond():
     for num in nums:
         filename = f'result/deviation_analysis/avg_cond_{num}.txt'
         if not os.path.exists(filename):
+            data_to_plot.append([])
             continue
         
         with open(filename, 'r') as f:
@@ -111,10 +116,12 @@ def plot_cond():
         
         if not numbers:
             print(f"There are invalid data in {filename}. Skip!")
+            data_to_plot.append([])
             continue
         transformed = [x for x in numbers if x <= 1.0 and x > 0.0]
         filtered = [100*(1.0 - x) for x in transformed]
         data_to_plot.append(filtered)
+
 
     # 创建箱线图
     plt.figure(figsize=(12, 6))

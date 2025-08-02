@@ -586,11 +586,11 @@ public class DeviationAnalysis {
 
             String progressBar = "";
             if (name == ExpName.multi_pDAG_psr){
-                progressBar += ("Fig. 5 : psr = " + currt + " : ");
+                progressBar += ("Fig. 5a : psr = " + currt + " : ");
             }else if (name == ExpName.multi_pDAG_para){
-                progressBar += ("Fig. 5 : parallelism = " + SystemParameters.maxParal + " : ");
+                progressBar += ("Fig. 5b : parallelism = " + SystemParameters.maxParal + " : ");
             }else if(name == ExpName.multi_pDAG_cond){
-                progressBar += ("Figs. 5 & 6 : condNum = " + SystemParameters.MAX_CondNum + " : ");
+                progressBar += ("Figs. 5c & 6 : condNum = " + SystemParameters.MAX_CondNum + " : ");
             }
 
             progressBar += "[" + "#".repeat(completedBars) + "-".repeat(remainingBars)+"]";
