@@ -123,6 +123,7 @@ def plot_cond():
         filtered = [100*(1.0 - x) for x in transformed]
         data_to_plot.append(filtered)
 
+
     # 创建箱线图
     plt.figure(figsize=(12, 6))
     plt.boxplot(data_to_plot, labels=[str(num) for num in nums], showfliers=False)

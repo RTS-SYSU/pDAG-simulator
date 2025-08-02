@@ -20,8 +20,7 @@
 
 
 
-This repository provides the implementation and experimental code accompanying the paper:
-"Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems."
+This repository provides the implementation and experimental code accompanying the paper: "Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems."
 
 
 
@@ -61,34 +60,124 @@ sudo systemctl start docker
 
 
 
-## 🚀 Automated Experiment Execution with Docker
+## 🚀 Docker-Based Experiment Workflow
 
-This project uses Docker to automatically run a DAG-based timing simulation and generate experimental results and plots. The execution process includes:
+This project uses Docker to support modular, on-demand experiment execution. You can:
 
-1. **Checking for an existing image locally**
-2. **If not found**, it tries to **pull from Docker Hub**
-3. **If pull fails**, it **builds the image locally**
-4. **Runs a container to execute experiments**
-5. **Copies the results (PDFs, logs, etc.) to the host**
-6. **Cleans up the container**
+1. Build or pull a Docker image
+2. Start a long-running container that waits for commands
+3. Send specific experiment commands (e.g., `deviation`, `cost`, `design`)
+4. Generate plots independently at any time
+5. Stop and clean up the container
 
-Run the experiment with:
+### 🧱 Image Preparation
 
-```sh
-sudo ./run.sh
+You can choose how to prepare the Docker image:
+
+```bash
+sudo ./run.sh build      # Build image locally
+sudo ./run.sh pull       # Pull from Docker Hub
 ```
 
-### Run Modes
+### 🚀 Start the Container
 
-You can pass an optional argument to choose how the image is prepared:
-
-- `build`: Always build locally
-- `pull`: Always pull from Docker Hub
-- `auto` *(default)*: Check local → Try pull → Then build
-
-```sh
-sudo ./run.sh build
+```bash
+sudo ./run.sh run
 ```
+
+This will start a background container running the Java entrypoint (Main class) and wait for commands.
+
+### 🧪 Run Experiments
+
+Once the container is running, you can send commands like:
+
+```bash
+sudo ./run.sh 
+
+sudo ./run.sh deviation cond 2 6       # Run DeviationAnalysis from cond=2 to cond=6
+sudo ./run.sh cost 2 10                # Run ComputationCostAnalysis from cond=2 to cond=10
+sudo ./run.sh design                   # Run DesignSolutionAnalysis
+```
+
+### 🖼 Generate Figures
+
+After running the experiments, you can generate all plots with:
+
+```bash
+sudo ./run.sh draw
+```
+
+All results will be copied to the `result/` folder on your host.
+
+### 🧹 Clean Up
+
+To stop and remove the container:
+
+```bash
+sudo ./run.sh clean
+```
+
+
+
+
+
+## 📊 Output & Visualization
+
+- **Experiment results** are saved in the `result/` directory.
+- Then, the Python scripts under `scripts/` will **generate plots as PDFs**.
+- The generated PDFs and result logs will be **copied to your host machine**.
+
+> ⚠️ *Note*: The figures may look different from those in the paper, because the publication figures were manually styled. However, the **data used is identical**.
+
+
+
+
+
+## ⏳ Computational Time & Reproducibility Notes
+
+This project has been tested on an Intel i5-13400F (2.5GHz) machine with 24GB RAM. Aside from minor variations due to random seeds, the generated results closely match those reported in the paper.
+
+Please note that the **enumeration-based analysis** can become **extremely time-consuming**, especially as the number of probabilistic structures increases. The runtime grows **exponentially** with the number of conditional branches. When the number exceeds 6 or 7, the enumeration method becomes **impractical**, often resulting in **heap memory overflow** errors.
+
+To help with efficient experimentation, estimated runtimes for different configurations are provided below. You may adjust your reproduction scope based on your own computational resources. For convenience, we provide a flexible execution script (`run.sh`). For example:
+
+```bash
+sudo ./run.sh deviation cond 2 6
+```
+
+This command runs the experiment for probabilistic structure counts ranging from 2 to 6, skipping the very slow group with count = 7.
+
+
+
+#### Estimated Experimental Time (Each group contains 500 randomly generated p-DAGs)
+
+1. **Fig. 5a Runtime Overview**
+
+   ![](.\assets\fig5aAnalyseTime.png)
+
+   
+
+2. **Fig. 5b Runtime Overview**
+
+   ![](.\assets\fig5bAnalyseTime.png)
+
+   
+
+3. **Fig. 5c Runtime Overview**
+
+   ![](.\assets\fig5cAnalyseTime.png)
+
+   
+
+4. **Fig. 6 Runtime Overview**
+
+   ![](.\assets\fig6AnalyseTime.png)
+
+   
+
+5. **Table V Runtime Overview**
+
+   ![](.\assets\tableVAnalyseTime.png)
 
 
 
@@ -96,7 +185,9 @@ sudo ./run.sh build
 
 ## 🛠 Script Logic Explained
 
-### Step 1: Check or prepare image
+### Step 1: Prepare the Docker image
+
+Depending on the selected mode (`build`, `pull`, or default `auto`), the script determines how to prepare the Docker image:
 
 ```bash
 if image_exists_locally; then
@@ -104,45 +195,77 @@ if image_exists_locally; then
 else
   case "$MODE" in
     build)
-      build_image
+      docker build -t $IMAGE_NAME .
       ;;
     pull)
-      pull_image || { echo "❌ Pull failed. Exiting."; exit 1; }
+      docker pull $IMAGE_NAME
       ;;
     auto)
-      echo "🔍 Trying to pull image..."
-      if pull_image; then
+      if docker pull $IMAGE_NAME; then
         echo "✅ Pull succeeded."
       else
         echo "⚠️ Pull failed. Building locally..."
-        build_image
+        docker build -t $IMAGE_NAME .
       fi
-      ;;
-    *)
-      echo "❌ Invalid mode. Use 'build', 'pull', or 'auto'."
-      exit 1
       ;;
   esac
 fi
 ```
 
-### Step 2: Run the container (executes Java + Python)
+### Step 2: Start the long-running container
 
 ```bash
-echo "🚀 Run the container and generate experimental figures..."
-docker run --name $CONTAINER_NAME $IMAGE_NAME
+docker run -dit --name $CONTAINER_NAME $IMAGE_NAME
 ```
 
-### Step 3: Copy result and clean up
+This container will start the Java `Main` class and stay running, waiting for incoming commands via standard input.
+
+### Step 3: Run specific experiments
+
+The script sends experiment commands to the running container:
 
 ```bash
-echo "📦 Copy the result to $RESULT_DIR_HOST"
-mkdir -p $RESULT_DIR_HOST
-docker cp $CONTAINER_NAME:$RESULT_DIR_CONTAINER/. $RESULT_DIR_HOST/
-
-echo "🧹 Clean up the container..."
-docker rm $CONTAINER_NAME
+docker exec -i $CONTAINER_NAME sh -c "echo 'deviation cond 2 6' | java -cp 'lib/*:bin' Main"
 ```
+
+These commands are passed to the Java main loop, which interprets and runs:
+
+- `deviation [psr|para|cond] [start end]`
+- `cost [start end]`
+- `design`
+
+Internally, it maps to:
+
+- `DeviationAnalysis.runCond(...)`, etc.
+
+### Step 4: Generate plots (optional)
+
+You can generate plots separately at any time (even before all experiments finish):
+
+```bash
+docker exec $CONTAINER_NAME python3 scripts/deviation_analysis_plot.py
+```
+
+Or simply use:
+
+```bash
+sudo ./run.sh draw
+```
+
+Which will:
+
+- Run all three Python plotting scripts
+- Copy results back to host machine
+
+### Step 5: Clean up
+
+When finished:
+
+```bash
+docker rm -f $CONTAINER_NAME
+```
+
+This removes the container instance.
 
 
 
@@ -167,22 +290,6 @@ All p-DAG experiments are under the package:
 4. **`DesignSolutionAnalysis`** – Implements **Experiment 3**. Measures the **minimum required number of cores** for different acceptance thresholds across three approaches.
 
 
-
-## 📊 Output & Visualization
-
-- **Experiment results** are saved in the `result/` directory.
-- Then, the Python scripts under `scripts/` will **generate plots as PDFs**.
-- The generated PDFs and result logs will be **copied to your host machine**.
-
-> ⚠️ *Note*: The figures may look different from those in the paper, because the publication figures were manually styled. However, the **data used is identical**.
-
-
-
-## ⏳ Warn Remainder
-
-TODO: 加个时间预估
-
-Due to the scale and number of conditional structures tested, the full experiment can take **over a day** to complete. Please be patient and ensure your machine has sufficient resources.
 
 
 

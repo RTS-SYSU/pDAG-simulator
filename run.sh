@@ -71,7 +71,7 @@ case "$1" in
     echo "  sudo ./run.sh run                       # Start container"
     echo "  sudo ./run.sh deviation psr 0.2 0.8     # Run DeviationAnalysis with params"
     echo "  sudo ./run.sh cost 2 10                 # Run ComputationCostAnalysis with params"
-    echo "  sudo ./run.sh design                    # Run DesignSolutionAnalysis"
+    echo "  sudo ./run.sh design 2 10               # Run DesignSolutionAnalysis"
     echo "  sudo ./run.sh draw                      # Generate plots"
     echo "  sudo ./run.sh clean                     # Stop and remove container"
     ;;
