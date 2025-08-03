@@ -168,25 +168,25 @@ This command runs the experiment for probabilistic structure counts ranging from
 
 1. **Fig. 5a Runtime Overview**
 
-   ![](.\assets\fig5aAnalyseTime.png)
+   ![](./assets/fig5aAnalyseTime.png)
 
    
 
 2. **Fig. 5b Runtime Overview**
 
-   ![](.\assets\fig5bAnalyseTime.png)
+   ![](./assets/fig5bAnalyseTime.png)
 
    
 
 3. **Figs. 5c & 6 Runtime Overview**
 
-   ![](.\assets\fig5cAnalyseTime.png)
+   ![](./assets/fig5cAnalyseTime.png)
 
    
 
 5. **Table V Runtime Overview**
 
-   ![](.\assets\TableVAnalyseTime .png)
+   ![](./assets/tableVAnalyseTime.png)
 
 
 
