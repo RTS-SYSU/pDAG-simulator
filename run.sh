@@ -35,7 +35,7 @@ case "$1" in
     docker run -dit --name $CONTAINER_NAME $IMAGE_NAME
     ;;
 
-  deviation|cost|design)
+  deviation|cost|design|all)
     if ! check_container_running; then
       echo "❌ Container not running. Please start it with: sudo ./run.sh run"
       exit 1
@@ -71,6 +71,7 @@ case "$1" in
     echo "  sudo ./run.sh build                     # Build docker image"
     echo "  sudo ./run.sh pull                      # Pull docker image"
     echo "  sudo ./run.sh run                       # Start container"
+    echo "  sudo ./run.sh all                       # Run all experiments shown in the paper"
     echo "  sudo ./run.sh deviation psr 0.2 0.8     # Run DeviationAnalysis with params"
     echo "  sudo ./run.sh cost 2 10                 # Run ComputationCostAnalysis with params"
     echo "  sudo ./run.sh design 3 10               # Run DesignSolutionAnalysis"

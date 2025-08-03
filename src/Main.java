@@ -66,7 +66,10 @@ public class Main {
                         System.out.println("Usage: design [start end]");
                     }
                     break;
-
+                case "all":
+                    DeviationAnalysis.run();
+                    DesignSolutionAnalysis.run();
+                    break;
                 default:
                     System.out.println("Unknown command: " + cmd);
             }

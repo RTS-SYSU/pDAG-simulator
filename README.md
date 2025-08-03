@@ -97,6 +97,8 @@ Once the container is running, you can send commands like:
 > Note that the results shown in Fig. 6 can be obtained in the experiments related to Fig. 5c. So if you have executed `sudo ./run.sh deviation cond`, you do not need to execute `sudo ./run.sh cost` again, unless you want to reproduce the results shown in Fig. 6 separately.
 
 ```bash
+sudo ./run.sh all							# Run all experiments
+
 sudo ./run.sh deviation						# Run DeviationAnalysis to replay the result shown in Fig. 5 in the paper
 sudo ./run.sh deviation psr / para / cond	# Replay the result shown in Fig. 5a / 5b / 5c in the paper
 sudo ./run.sh deviation psr 0.2 0.6

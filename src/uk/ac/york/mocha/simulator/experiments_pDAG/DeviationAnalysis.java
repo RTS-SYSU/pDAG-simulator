@@ -101,6 +101,8 @@ public class DeviationAnalysis {
         startrt = (int) (startPsr * 100);
         endrt = (int) (endPsr *100);
 
+        param = "ratio";
+
         for (int i = startrt; i <= endrt; i = i + incrementrt) {
             currt = i;
             timeIdx.add(i);
@@ -134,6 +136,8 @@ public class DeviationAnalysis {
         int seed = 1000;
         startParal = startPara;
         endParal = endPara;
+
+        param= "para";
 
         for (int i = startParal; i <= endParal; i = i + incrementParal) {
             SystemParameters.maxParal = i;
@@ -169,6 +173,8 @@ public class DeviationAnalysis {
         SystemParameters.utilPerTask = Double.parseDouble(df.format((double) 20 / (double) 10));
         startCond = custStartCond;
         endCond = custEndCond;
+
+        param = "cond";
 
         for (int numberCond = startCond; numberCond <= endCond; numberCond += incrementCond) {
             SystemParameters.MAX_CondNum = numberCond;
