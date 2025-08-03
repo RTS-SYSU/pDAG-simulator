@@ -58,7 +58,13 @@ public class Main {
                     break;
 
                 case "design":
-                    DesignSolutionAnalysis.run();
+                    if (args.length == 1) {
+                        DesignSolutionAnalysis.run();
+                    } else if (args.length == 3) {
+                        DesignSolutionAnalysis.run(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+                    } else {
+                        System.out.println("Usage: design [start end]");
+                    }
                     break;
 
                 default:

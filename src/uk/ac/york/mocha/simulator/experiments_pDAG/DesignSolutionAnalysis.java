@@ -72,7 +72,7 @@ public class DesignSolutionAnalysis {
         backup.restore();
     }
 
-    public static void run(int custStartCond, int custEndCond){
+    public static void run(int custStartCond, int custEndCond) {
         System.out.println("Start running design solution analysis");
 
         StaticFieldBackup backup = new StaticFieldBackup(SystemParameters.class);
@@ -301,7 +301,8 @@ public class DesignSolutionAnalysis {
                 int mid = (l + r) / 2;
 
                 // 根据判定条件进行判断
-                if (dg.bestDistance + (dg.getSchedParameters().getWCET() - dg.bestDistance) / mid <= dg.getSchedParameters().getDeadline()) {
+//                if (dg.bestDistance + (dg.getSchedParameters().getWCET() - dg.bestDistance) / mid <= dg.getSchedParameters().getDeadline()) {
+                if (dg.bestDistance + (long) Math.ceil((double) (dg.getSchedParameters().getWCET() - dg.bestDistance) / mid) <= dg.getSchedParameters().getDeadline()) {
                     r = mid;  // 如果 mid 满足条件，更新左边界
                 } else {
                     l = mid + 1;  // 如果 mid 不满足条件，更新右边界
@@ -313,13 +314,13 @@ public class DesignSolutionAnalysis {
 
             // visual progress bar
             long elapsed = System.currentTimeMillis() - startTime;
-            double percent = (double)record / SystemParameters.TargetNum;
+            double percent = (double) record / SystemParameters.TargetNum;
             int completedBars = (int) (percent * barLength);
-            int remainingBars = barLength-completedBars;
+            int remainingBars = barLength - completedBars;
             double elapsedSec = elapsed / 1000.0;
-            double etaSec = (record==0) ? 0 : elapsedSec / record * (SystemParameters.TargetNum - record);
-            String progressBar = "Table V : condNum = "+SystemParameters.MAX_CondNum + " : "
-                    + "[" + "#".repeat(completedBars) + "-".repeat(remainingBars)+"]";
+            double etaSec = (record == 0) ? 0 : elapsedSec / record * (SystemParameters.TargetNum - record);
+            String progressBar = "Table V : condNum = " + SystemParameters.MAX_CondNum + " : "
+                    + "[" + "#".repeat(completedBars) + "-".repeat(remainingBars) + "]";
             System.out.printf("\r%s %.1f%% (%d / %d) | Elapsed: %.1fs | ETA: %.1fs",
                     progressBar, percent * 100, record, SystemParameters.TargetNum, elapsedSec, etaSec);
 

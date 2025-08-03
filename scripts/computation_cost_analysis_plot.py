@@ -38,7 +38,7 @@ def read_variables_and_values(filename, bound=4):
                     values.append([np.nan for _ in range(500)])
                     continue
                 # ======================================================================= #
-                values.append([float(x) for x in line.split(',')[:500]])
+                values.append([float(x.strip()) for x in line.split(',')[:500] if x != ''])
                 
     
     return variables, values
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
 
     plt.rcParams.update({
-        'font.family': 'Times New Roman',
+        # 'font.family': 'Times New Roman',
         'font.size': 14,
         'axes.labelsize': 16,
         'axes.titlesize': 18,
@@ -184,7 +184,8 @@ if __name__ == '__main__':
         spine.set_linewidth(2)
     # ======================================
 
-    legend_font = FontProperties(family='Times New Roman', size=24) 
+    # legend_font = FontProperties(family='Times New Roman', size=24)
+    legend_font = FontProperties(size=24)
     # legend = plt.legend(loc='upper right', prop=legend_font, handlelength=1.2)
     legend = plt.legend(
         loc='upper right',

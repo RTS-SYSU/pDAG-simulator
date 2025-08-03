@@ -72,11 +72,14 @@ This project uses Docker to support modular, on-demand experiment execution. You
 
 ### 🧱 Image Preparation
 
-You can choose how to prepare the Docker image:
+You can choose how to prepare the Docker image (just choose one of them):
+
+> When building the Docker image locally, if the prompt indicates that pulling OpenJDK has failed, it may be necessary to connect to a VPN to access the corresponding repository.
 
 ```bash
 sudo ./run.sh build      # Build image locally
-sudo ./run.sh pull       # Pull from Docker Hub
+
+sudo ./run.sh pull       # Or pull from Docker Hub
 ```
 
 ### 🚀 Start the Container
@@ -91,12 +94,22 @@ This will start a background container running the Java entrypoint (Main class) 
 
 Once the container is running, you can send commands like:
 
-```bash
-sudo ./run.sh 
+> Note that the results shown in Fig. 6 can be obtained in the experiments related to Fig. 5c. So if you have executed `sudo ./run.sh deviation cond`, you do not need to execute `sudo ./run.sh cost` again, unless you want to reproduce the results shown in Fig. 6 separately.
 
-sudo ./run.sh deviation cond 2 6       # Run DeviationAnalysis from cond=2 to cond=6
-sudo ./run.sh cost 2 10                # Run ComputationCostAnalysis from cond=2 to cond=10
-sudo ./run.sh design                   # Run DesignSolutionAnalysis
+```bash
+sudo ./run.sh deviation						# Run DeviationAnalysis to replay the result shown in Fig. 5 in the paper
+sudo ./run.sh deviation psr / para / cond	# Replay the result shown in Fig. 5a / 5b / 5c in the paper
+sudo ./run.sh deviation psr 0.2 0.6
+sudo ./run.sh deviation para 3 8
+sudo ./run.sh deviation cond 2 6			# Replay certain groups
+
+
+sudo ./run.sh cost							# Run ComputationCostAnalysis to replay the result shown in Fig. 6 in the paper
+sudo ./run.sh cost 2 10                		# Replay certain groups
+
+
+sudo ./run.sh design                   		# Run DesignSolutionAnalysis to replay the result shown in Table V in the paper
+sudo ./run.sh design 2 5					# Replay certain groups
 ```
 
 ### 🖼 Generate Figures
@@ -109,9 +122,11 @@ sudo ./run.sh draw
 
 All results will be copied to the `result/` folder on your host.
 
+> Note that when the corresponding data file does not exist, experimental result charts can also be drawn, and the corresponding data will not be displayed on the chart or table.
+
 ### 🧹 Clean Up
 
-To stop and remove the container:
+To stop and remove the container and the built image:
 
 ```bash
 sudo ./run.sh clean
@@ -163,21 +178,15 @@ This command runs the experiment for probabilistic structure counts ranging from
 
    
 
-3. **Fig. 5c Runtime Overview**
+3. **Figs. 5c & 6 Runtime Overview**
 
    ![](.\assets\fig5cAnalyseTime.png)
 
    
 
-4. **Fig. 6 Runtime Overview**
-
-   ![](.\assets\fig6AnalyseTime.png)
-
-   
-
 5. **Table V Runtime Overview**
 
-   ![](.\assets\tableVAnalyseTime.png)
+   ![](.\assets\TableVAnalyseTime .png)
 
 
 
