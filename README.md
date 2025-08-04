@@ -1,8 +1,7 @@
 # p-DAG Execution Timing Simulator
 
 <p align="center">
-<a href="https://www.rtss.org"><img src="https://img.shields.io/badge/RTSS-2025-blueviolet?logo=IEEE" alt="RTSS 2025"></a><a href="https://github.com/RTS-SYSU" rel="nofollow"><img src="https://img.shields.io/badge/RTS-SYSU-brightgreen.svg"></a><a href="#"><img src="https://img.shields.io/badge/Language-Java_&_Python-yellow" alt="Language"></a><a href="#"><img src="https://img.shields.io/badge/Platform-Docker_Ready-blue" alt="Platform"></a><a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="License"></a></p>
-
+<a href="https://www.rtss.org"><img src="https://img.shields.io/badge/RTSS-2025-blueviolet?logo=IEEE" alt="RTSS 2025"></a>&nbsp;<a href="https://github.com/RTS-SYSU" rel="nofollow"><img src="https://img.shields.io/badge/RTS-SYSU-brightgreen.svg"></a>&nbsp;<a href="#"><img src="https://img.shields.io/badge/Language-Java_&_Python-yellow" alt="Language"></a>&nbsp;<a href="#"><img src="https://img.shields.io/badge/Platform-Docker_Ready-blue" alt="Platform"></a>&nbsp;<a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="License"></a></p>
 
 
 
