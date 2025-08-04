@@ -1,26 +1,12 @@
 # p-DAG Execution Timing Simulator
 
 <p align="center">
-    <a href="https://www.rtss.org">
-        <img src="https://img.shields.io/badge/RTSS-2025-blueviolet?logo=IEEE" alt="RTSS 2025">
-    </a>
-    <a href="https://github.com/RTS-SYSU" rel="nofollow">
-        <img src="https://img.shields.io/badge/RTS-SYSU-brightgreen.svg">
-    </a>
-    <a href="#">
-    <img src="https://img.shields.io/badge/Language-Java_&_Python-yellow" alt="Language">
-  </a>
-    <a href="#">
-    <img src="https://img.shields.io/badge/Platform-Docker_Ready-blue" alt="Platform">
-  </a>
-    <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
-  </a>
-</p>
+<a href="https://www.rtss.org"><img src="https://img.shields.io/badge/RTSS-2025-blueviolet?logo=IEEE" alt="RTSS 2025"></a><a href="https://github.com/RTS-SYSU" rel="nofollow"><img src="https://img.shields.io/badge/RTS-SYSU-brightgreen.svg"></a><a href="#"><img src="https://img.shields.io/badge/Language-Java_&_Python-yellow" alt="Language"></a><a href="#"><img src="https://img.shields.io/badge/Platform-Docker_Ready-blue" alt="Platform"></a><a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="License"></a></p>
 
 
 
-This repository provides the implementation and experimental code accompanying the paper: "Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems."
+
+This repository provides the implementation and experimental code accompanying the paper: "Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems" submitted in RTSS 2025.
 
 
 
@@ -44,7 +30,7 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] 
 sudo apt install -y docker-ce docker-ce-cli containerd.io
 ```
 
-### Method 2: Quick Install via Script
+### Method 2: Quick Install via Script (Recommended)
 
 ```sh
 sudo curl -fsSL https://get.docker.com | sudo sh
@@ -70,7 +56,7 @@ This project uses Docker to support modular, on-demand experiment execution. You
 4. Generate plots independently at any time
 5. Stop and clean up the container
 
-### 🧱 Image Preparation
+### Image Preparation
 
 You can choose how to prepare the Docker image (just choose one of them):
 
@@ -79,10 +65,12 @@ You can choose how to prepare the Docker image (just choose one of them):
 ```bash
 sudo ./run.sh build      # Build image locally
 
-sudo ./run.sh pull       # Or pull from Docker Hub
+# OR
+
+sudo ./run.sh pull       # Pull from Docker Hub
 ```
 
-### 🚀 Start the Container
+### Start the Container
 
 ```bash
 sudo ./run.sh run
@@ -90,31 +78,42 @@ sudo ./run.sh run
 
 This will start a background container running the Java entrypoint (Main class) and wait for commands.
 
-### 🧪 Run Experiments
+### Run Experiments
 
 Once the container is running, you can send commands like:
 
 > Note that the results shown in Fig. 6 can be obtained in the experiments related to Fig. 5c. So if you have executed `sudo ./run.sh deviation cond`, you do not need to execute `sudo ./run.sh cost` again, unless you want to reproduce the results shown in Fig. 6 separately.
 
 ```bash
-sudo ./run.sh all							# Run all experiments
+# Run all experiments
+sudo ./run.sh all
 
-sudo ./run.sh deviation						# Run DeviationAnalysis to replay the result shown in Fig. 5 in the paper
-sudo ./run.sh deviation psr / para / cond	# Replay the result shown in Fig. 5a / 5b / 5c in the paper
+
+# Run DeviationAnalysis to replicate the result shown in Fig. 5 in the paper
+sudo ./run.sh deviation
+# Replicate the result shown in Fig. 5a / 5b / 5c in the paper
+sudo ./run.sh deviation psr
+sudo ./run.sh deviation para
+sudo ./run.sh deviation cond
+# Replicate the results in specific subfigure in Fig. 5
 sudo ./run.sh deviation psr 0.2 0.6
 sudo ./run.sh deviation para 3 8
-sudo ./run.sh deviation cond 2 6			# Replay certain groups
+sudo ./run.sh deviation cond 2 6
 
 
-sudo ./run.sh cost							# Run ComputationCostAnalysis to replay the result shown in Fig. 6 in the paper
-sudo ./run.sh cost 2 10                		# Replay certain groups
+# Run ComputationCostAnalysis to replicate the result shown in Fig. 6 in the paper
+sudo ./run.sh cost
+# Replicate the results under specific settings of the number of probabilistic structures
+sudo ./run.sh cost 2 10
 
 
-sudo ./run.sh design                   		# Run DesignSolutionAnalysis to replay the result shown in Table V in the paper
-sudo ./run.sh design 2 5					# Replay certain groups
+# Run DesignSolutionAnalysis to replicate the result shown in Table V in the paper
+sudo ./run.sh design
+# Replicate the results under specific settings of the number of probabilistic structures
+sudo ./run.sh design 3 9
 ```
 
-### 🖼 Generate Figures
+### Generate Figures
 
 After running the experiments, you can generate all plots with:
 
@@ -124,9 +123,11 @@ sudo ./run.sh draw
 
 All results will be copied to the `result/` folder on your host.
 
-> Note that when the corresponding data file does not exist, experimental result charts can also be drawn, and the corresponding data will not be displayed on the chart or table.
+> ⚠️ *Note*: The figures may look different from those in the paper, because the publication figures were manually styled. However, the **data used is identical**. 
+>
+> When the corresponding data file does not exist, experimental result charts can also be drawn, and the corresponding data will not be displayed on the chart or table.
 
-### 🧹 Clean Up
+### Clean Up
 
 To stop and remove the container and the built image:
 
@@ -138,21 +139,9 @@ sudo ./run.sh clean
 
 
 
-## 📊 Output & Visualization
-
-- **Experiment results** are saved in the `result/` directory.
-- Then, the Python scripts under `scripts/` will **generate plots as PDFs**.
-- The generated PDFs and result logs will be **copied to your host machine**.
-
-> ⚠️ *Note*: The figures may look different from those in the paper, because the publication figures were manually styled. However, the **data used is identical**.
-
-
-
-
-
 ## ⏳ Computational Time & Reproducibility Notes
 
-This project has been tested on an Intel i5-13400F (2.5GHz) machine with 24GB RAM. Aside from minor variations due to random seeds, the generated results closely match those reported in the paper.
+This project has been tested on an Intel i5-13400F (2.5GHz) machine with 24GB RAM. 
 
 Please note that the **enumeration-based analysis** can become **extremely time-consuming**, especially as the number of probabilistic structures increases. The runtime grows **exponentially** with the number of conditional branches. When the number exceeds 6 or 7, the enumeration method becomes **impractical**, often resulting in **heap memory overflow** errors.
 
@@ -167,6 +156,14 @@ This command runs the experiment for probabilistic structure counts ranging from
 
 
 #### Estimated Experimental Time (Each group contains 500 randomly generated p-DAGs)
+
+> During experiment reproduction, progress is clearly displayed in the form of a dynamic progress bar. The console output includes the following information:
+>
+> - Which experiment is currently being reproduced
+> - The specific experimental settings (e.g., `psr=10`)
+> - Reproduction progress, shown as a progress bar (e.g., out of 500 p-DAGs)
+> - Elapsed time since the experiment started (Elapsed)
+> - Estimated time remaining (ETA)
 
 1. **Fig. 5a Runtime Overview**
 
@@ -186,7 +183,7 @@ This command runs the experiment for probabilistic structure counts ranging from
 
    
 
-5. **Table V Runtime Overview**
+4. **Table V Runtime Overview**
 
    ![](./assets/tableVAnalyseTime.png)
 
@@ -195,6 +192,8 @@ This command runs the experiment for probabilistic structure counts ranging from
 
 
 ## 🛠 Script Logic Explained
+
+Below is an explanation of the `run.sh` script, including how it builds the Docker image locally, runs the container, performs a full one-click experiment reproduction, or allows flexible selection of which experiment and parameter groups to reproduce.
 
 ### Step 1: Prepare the Docker image
 
@@ -236,14 +235,14 @@ This container will start the Java `Main` class and stay running, waiting for in
 The script sends experiment commands to the running container:
 
 ```bash
-docker exec -i $CONTAINER_NAME sh -c "echo 'deviation cond 2 6' | java -cp 'lib/*:bin' Main"
+docker exec $CONTAINER_NAME java -cp "lib/*:bin" Main $*
 ```
 
 These commands are passed to the Java main loop, which interprets and runs:
 
 - `deviation [psr|para|cond] [start end]`
 - `cost [start end]`
-- `design`
+- `design [start end]`
 
 Internally, it maps to:
 
@@ -284,21 +283,46 @@ This removes the container instance.
 
 ## 📦 Project Overview
 
-This project is a Java-based **DAG execution timing simulation framework**. It consists of:
+This is a Java-based project designed to support the reproduction of multiple research papers focused on DAG (Directed Acyclic Graph) analysis. As a result, you may encounter some classes or components that contain attributes unrelated to the specific experiments presented in this paper. For example, the `DirectedAcyclicGraph` class includes a `CacheHierarchy` field, which pertains to cache-related experiments from other works. These can be safely ignored for the purpose of reproducing this paper's experiments.
 
-- A DAG task framework (nodes, dependencies, etc.)
-- A simulator framework
-- A hardware framework (caches, history tables, etc.)
+The project is organized into the following major components:
 
-All p-DAG experiments are under the package:
- `uk.ac.york.mocha.simulator.experiments_pDAG`
+1. **Experiment Parameter Modules**
+    Located in the package `uk.ac.york.mocha.simulator.parameters`, this includes:
+   - `StructuralParameters`: defines structural settings used in p-DAG construction
+   - `SystemParameters`: includes critical system-level configurations such as hardware, number of cores, etc.
+   - `SchedulingParameters`: covers parameters for scheduling policies
+2. **p-DAG Generation Components**
+    Found in `uk.ac.york.mocha.simulator.generator`, this module handles p-DAG creation:
+   - `SystemGenerator`: generates the full DAG structure
+   - `PathGenerator`: builds the conditional subgraphs within the DAG
+   - etc.
+3. **Entity Classes**
+    Located in `uk.ac.york.mocha.simulator.entity`, this includes:
+   - `Node`: represents a task or unit in the DAG
+   - `DirectedAcyclicGraph`: the main DAG data structure
+   - etc.
+4. **Experiment Suite**
+    All experiments related to the paper are located in `uk.ac.york.mocha.simulator.experiments_pDAG`. This includes:
+   - `AllExprs`: contains all experiments, including those not included in the final publication
+   - Other classes break out each individual experiment for clarity and ease of review
+
+
+
+### How to Explore the Code
+
+To understand how the experiments are performed, we recommend starting from the `DeviationAnalysis.Main` entry point. Using step-by-step debugging, you can observe how the DAGs are generated, analyzed, and which components are involved in the process.
+
+Most helper functions can be treated as **black boxes**—you only need to focus on their input and output behavior to follow the overall logic. There's no need to dive into the internal implementation unless you're interested in the details.
+
+
 
 ### Key Experiment Classes
 
 1. **`AllExprs`** – Contains all experiments, including those not shown in the paper. For clarity, the experiments published in the paper are separated into the following three classes.
 2. **`DeviationAnalysis`** – Implements **Experiment 1**. Runs 500 trials under different `psr`, `parallelism`, and `number of conditional structures`. Tracks deviation and analysis time.
 3. **`ComputationCostAnalysis`** – Implements **Experiment 2**. Measures analysis time difference between the proposed method and enumeration-based method under different conditional structure counts.
-4. **`DesignSolutionAnalysis`** – Implements **Experiment 3**. Measures the **minimum required number of cores** for different acceptance thresholds across three approaches.
+4. **`DesignSolutionAnalysis`** – Implements **Experiment 3**. Measures the minimum required number of cores for different acceptance thresholds across three approaches.
 
 
 
@@ -308,7 +332,7 @@ All p-DAG experiments are under the package:
 
 Project Maintainers:
 
+- **Zhiyang Lin** — [linzhy78@mail2.sysu.edu.cn]()
 - **Shuai Zhao** — [zhaosh56@mail.sysu.edu.cn]()
 - **Yiyang Gao** — [gaoyy26@mail2.sysu.edu.cn]()
-- **Zhiyang Lin** — [linzhy78@mail2.sysu.edu.cn]()
 

@@ -68,15 +68,15 @@ case "$1" in
 
   *)
     echo "Usage:"
-    echo "  sudo ./run.sh build                     # Build docker image"
-    echo "  sudo ./run.sh pull                      # Pull docker image"
-    echo "  sudo ./run.sh run                       # Start container"
-    echo "  sudo ./run.sh all                       # Run all experiments shown in the paper"
-    echo "  sudo ./run.sh deviation psr 0.2 0.8     # Run DeviationAnalysis with params"
-    echo "  sudo ./run.sh cost 2 10                 # Run ComputationCostAnalysis with params"
-    echo "  sudo ./run.sh design 3 10               # Run DesignSolutionAnalysis"
-    echo "  sudo ./run.sh draw                      # Generate plots"
-    echo "  sudo ./run.sh clean                     # Stop and remove container"
+    echo "    sudo ./run.sh build                     # Build docker image"
+    echo "    sudo ./run.sh pull                      # Pull docker image"
+    echo "    sudo ./run.sh run                       # Start container"
+    echo "    sudo ./run.sh all                       # Run all experiments shown in the paper"
+    echo "    sudo ./run.sh deviation psr 0.2 0.8     # Run DeviationAnalysis with specific params"
+    echo "    sudo ./run.sh cost 2 10                 # Run ComputationCostAnalysis with specific params"
+    echo "    sudo ./run.sh design 3 10               # Run DesignSolutionAnalysis with specific params"
+    echo "    sudo ./run.sh draw                      # Generate plots and copy to result directory in host machine"
+    echo "    sudo ./run.sh clean                     # Stop and remove container"
     ;;
 esac
 
