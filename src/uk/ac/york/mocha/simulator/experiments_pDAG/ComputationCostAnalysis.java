@@ -44,7 +44,7 @@ public class ComputationCostAnalysis {
     public static List<Integer> timeIdx = new ArrayList<>();
 
     public static TPDSHe He19;
-    public static String param;
+    public static String param = "cond";
 
     public static String resRootPath = "result/computation_cost_analysis";
 

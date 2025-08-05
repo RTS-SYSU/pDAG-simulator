@@ -41,8 +41,8 @@ def plot_ratio():
     plt.yticks([0, 5, 10, 15])
     plt.ylim(-2, 17)
 
-    plt.xlabel('Portion of probabilistic structures')
-    plt.ylabel('Deviation (%)')
+    plt.xlabel('Portion of probabilistic structures', fontsize = 18)
+    plt.ylabel('Deviation (%)', fontsize = 18)
     plt.grid(True, linestyle='--', alpha=0.7)
     res_file='result/deviation_analysis_ratio.pdf'
     plt.savefig(res_file, format='pdf')
@@ -86,8 +86,8 @@ def plot_para():
     plt.yticks([0, 5, 10, 15])
     plt.ylim(-2, 17)
 
-    plt.xlabel('Number of nodes per layer')
-    plt.ylabel('Deviation')
+    plt.xlabel('Number of nodes per layer', fontsize = 18)
+    plt.ylabel('Deviation', fontsize = 18)
     plt.grid(True, linestyle='--', alpha=0.7)
     res_file = 'result/deviation_analysis_para.pdf'
     plt.savefig(res_file, format='pdf')
@@ -131,8 +131,8 @@ def plot_cond():
     plt.yticks([0, 5, 10, 15])
     plt.ylim(-2, 17)
 
-    plt.xlabel('Number of probabilistic structures')
-    plt.ylabel('Deviation')
+    plt.xlabel('Number of probabilistic structures', fontsize = 18)
+    plt.ylabel('Deviation', fontsize = 18)
     plt.grid(True, linestyle='--', alpha=0.7)
     res_file = 'result/deviation_analysis_cond.pdf'
     plt.savefig(res_file, format='pdf')
