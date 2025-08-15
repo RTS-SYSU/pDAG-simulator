@@ -29,8 +29,6 @@ scripts/.vscode/
 ### Mac OS ###
 .DS_Store
 
-*.pdf
-
 *.xlsx
 
 .idea

@@ -7,11 +7,17 @@
 
 ## Overview
 
-This repository provides the implementation and experimental code accompanying the paper: "Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems" submitted in RTSS 2025. It includes all necessary source code and automation scripts to reproduce the results presented in the paper, specifically:
+This repository provides the implementation and experimental code accompanying the paper: "Response Time Analysis for Probabilistic DAG Tasks in Multicore Real-Time Systems" submitted in RTSS 2025. 
+
+It includes **all necessary source code**, the **paper draft** and **automation scripts** to reproduce the results presented in the paper, specifically:
 
 - A Java-based analysis framework
 - Python scripts for generating all experimental figures
 - Shell scripts for automated building, execution, and validation
+
+In addition, a pre-built **Docker image** `lzylearning/simulator:latest` containing the complete experimental environment has been uploaded to **Docker Hub** and can be pulled directly. 
+
+> You may also use the provided automation scripts in this repository to pull and run the image.
 
 To reproduce the experiments, simply clone this repository and follow the instructions below to prepare the environment and start running:
 
@@ -22,6 +28,10 @@ git clone https://github.com/RTS-SYSU/pDAG-simulator.git
 # Navigate into the project directory
 cd pDAG-simulator
 ```
+
+**If the reviewers experience any difficulty accessing GitHub or Docker Hub, all materials, including the Docker image, are also available via GoogleDrive at the following link:**
+
+https://drive.google.com/drive/folders/1gopOhQNhNaXv_2--cDq4tSAgLPTIS0Zo?usp=sharing
 
 
 
